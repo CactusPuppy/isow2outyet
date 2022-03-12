@@ -19,9 +19,7 @@
           rel="noreferrer noopener"
           target="_blank"
           class="text-blue-600 dark:text-blue-300 underline"
-        >
-          Sign up here
-        </a>.
+        >Sign up here</a>.
       {/if}
     </p>
   </div>
