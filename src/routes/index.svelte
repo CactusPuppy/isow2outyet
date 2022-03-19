@@ -2,7 +2,7 @@
   import {formatDistanceToNowStrict, format} from "date-fns";
 
   export let ow2ReleaseDate = new Date(2077, 4, 20);
-  // export let ow2BetaDate = new Date(2022, 4, 31);
+  export let ow2BetaDate = new Date("2022-04-26T00:00:00.000-07:00");
   $: isOW2Out = new Date(Date.now()) > ow2ReleaseDate;
   let releaseDateAnnounced = false;
 </script>
@@ -14,11 +14,11 @@
       {#if releaseDateAnnounced}
         {formatDistanceToNowStrict(ow2ReleaseDate)} until release on {format(ow2ReleaseDate, "MMMM do, yyyy")}
       {:else}
-        ...but there is a beta coming in late April.<br />
+        ...but there is a beta coming in <time datetime={format(ow2BetaDate, "yyyy-MM-dd")} class="underline dark:text-slate-100">{formatDistanceToNowStrict(ow2BetaDate)}</time> on {format(ow2BetaDate, "MMMM do")}.<br />
         <a href="https://playoverwatch.com/beta"
           rel="noreferrer noopener"
           target="_blank"
-          class="text-blue-600 dark:text-blue-300 underline"
+          class="text-blue-600 dark:text-blue-400 underline"
         >Sign up here</a>.
       {/if}
     </p>
