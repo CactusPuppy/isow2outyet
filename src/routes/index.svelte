@@ -2,7 +2,7 @@
   import {formatDistanceToNowStrict, format} from "date-fns";
 
   export let ow2ReleaseDate = new Date(2077, 4, 20);
-  export let ow2BetaDate = new Date("2022-04-26T00:00:00.000-07:00");
+  export let ow2BetaDate = new Date("2022-04-26T11:00:00.000-07:00");
   $: isOW2Out = new Date(Date.now()) > ow2ReleaseDate;
   let releaseDateAnnounced = false;
 </script>
