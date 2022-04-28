@@ -2,24 +2,27 @@
   import {formatDistanceToNowStrict, format} from "date-fns";
 
   export let ow2ReleaseDate = new Date(2077, 4, 20);
-  export let ow2BetaDate = new Date("2022-04-26T11:00:00.000-07:00");
-  $: isOW2Out = new Date(Date.now()) > ow2ReleaseDate;
+  export let ow2BetaDate = new Date("2022-05-17T11:00:00.000-07:00");
+  $: now = new Date(Date.now());
+  $: isOW2Out = now > ow2ReleaseDate;
+  $: isBetaOver = now > ow2BetaDate;
   let releaseDateAnnounced = false;
 </script>
 
-<div class="flex flex-col justify-center items-center h-[100vh] w-[100vw]">
+<div class="flex flex-col justify-center items-cente h-[100vh] w-[100vw]">
   <div class="flex-grow flex flex-col justify-center items-center py-8">
     <h1 class="text-6xl font-display font-medium dark:text-slate-100">{isOW2Out ? "Yes." : "Not yet."}</h1>
     <p class="my-4 mx-2 italic dark:text-slate-100 text-center">
       {#if releaseDateAnnounced}
         {formatDistanceToNowStrict(ow2ReleaseDate)} until release on {format(ow2ReleaseDate, "MMMM do, yyyy")}
-      {:else}
-        ...but there is a beta coming in <time datetime={format(ow2BetaDate, "yyyy-MM-dd")} class="underline dark:text-slate-100">{formatDistanceToNowStrict(ow2BetaDate)}</time> on {format(ow2BetaDate, "MMMM do")}.<br />
-        <a href="https://playoverwatch.com/beta"
+      {:else if !isBetaOver}
+        ...but a beta is now active for the next <time datetime={format(ow2BetaDate, "yyyy-MM-dd")} class="underline dark:text-slate-100">{formatDistanceToNowStrict(ow2BetaDate)}</time> until {format(ow2BetaDate, "MMMM do")}.
+        <br />
+        <a href="https://news.blizzard.com/en-us/overwatch/23798985/welcome-to-the-first-overwatch-2-pvp-beta"
           rel="noreferrer noopener"
           target="_blank"
           class="text-blue-600 dark:text-blue-400 underline"
-        >Sign up here</a>.
+        >More information here</a>.
       {/if}
     </p>
   </div>
