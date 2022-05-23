@@ -7,7 +7,7 @@
   let releaseDateAnnounced = false;
 </script>
 
-<div class="flex flex-col justify-center items-cente h-[100vh] w-[100vw]">
+<div class="flex flex-col justify-center items-center h-[100vh] w-[100vw]">
   <div class="flex-grow flex flex-col justify-center items-center py-8">
     <h1 class="text-6xl font-display font-bold dark:text-slate-100">{isOW2Out ? "Yes." : "Not yet."}</h1>
     <p class="my-4 mx-2 italic dark:text-slate-100 text-center">
