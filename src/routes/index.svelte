@@ -1,13 +1,11 @@
 <script lang="ts">
-  import {formatDistanceToNowStrict, differenceInCalendarDays, format} from "date-fns";
+  import {formatDistanceToNowStrict, differenceInCalendarDays, format, parseISO} from "date-fns";
   import { onDestroy, onMount } from "svelte";
 
-  export let ow2ReleaseDate = new Date(2077, 4, 20);
+  export let ow2ReleaseDate = parseISO("2022-10-04T11:00:00-7:00")
   $: now = new Date(Date.now());
   $: isOW2Out = now > ow2ReleaseDate;
-  let releaseDateAnnounced = false;
-
-  export let nextOW2NewsDate = new Date(2022, 5, 16);
+  let releaseDateAnnounced = true;
 
   let timeUpdater : NodeJS.Timer;
   onMount(() => {
@@ -24,15 +22,12 @@
 <div class="flex flex-col justify-center items-center h-[100vh] w-[100vw]">
   <div class="flex-grow flex flex-col justify-center items-center py-8">
     <h1 class="text-7xl font-display font-semibold dark:text-slate-100">{isOW2Out ? "Yes." : "Not yet."}</h1>
-    {#if !isOW2Out}
+    {#if (releaseDateAnnounced && now < ow2ReleaseDate)}
       <p class="mt-4 mx-2 text- italic dark:text-slate-100 text-center">
         ...but there {differenceInCalendarDays(now, ow2ReleaseDate) === 1 ? "is" : "are"}
-        {#if releaseDateAnnounced}
-          <span class="text-ow2-orange dark:text-ow2-light-orange">{differenceInCalendarDays(now, ow2ReleaseDate) >= 1 ? differenceInCalendarDays(now, ow2ReleaseDate) : formatDistanceToNowStrict(ow2ReleaseDate)} </span>
+        {#if releaseDateAnnounced && now < ow2ReleaseDate}
+          <span class="text-ow2-orange dark:text-ow2-light-orange">{differenceInCalendarDays(ow2ReleaseDate, now) >= 1 ? `${differenceInCalendarDays(ow2ReleaseDate, now)} days` : formatDistanceToNowStrict(ow2ReleaseDate)} </span>
           until release on <span class="text-ow2-orange dark:text-ow2-light-orange">{format(ow2ReleaseDate, "MMMM do, yyyy")}</span>
-        {:else if nextOW2NewsDate > now}
-          <span class="text-ow2-orange dark:text-ow2-light-orange">{differenceInCalendarDays(now, nextOW2NewsDate) >= 1 ? differenceInCalendarDays(now, nextOW2NewsDate) : formatDistanceToNowStrict(nextOW2NewsDate)} </span>
-          until more OW2 news on <span class="text-ow2-orange dark:text-ow2-light-orange">{format(nextOW2NewsDate, "MMMM do, yyyy")}</span>
         {/if}
       </p>
     {/if}
